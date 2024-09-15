@@ -1,5 +1,5 @@
 "use client";
-import { CurrentOwnerBucket, RootResponse } from "@/lib/types";
+import { RootResponse } from "@/lib/types";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import ClassImg from "@/public/CodeImg.svg";
@@ -55,10 +55,6 @@ const Page = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | { message?: string } | null>(null);
 
-  const [initialOwner, setInitialOwner] = useState<
-    CurrentOwnerBucket[] | undefined
-  >(data?.body.aggregations.current_owners.buckets);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -96,16 +92,16 @@ const Page = ({
     fetchData();
   }, [searchParams]);
 
-  const generateAlternatingPatterns = (query: string): string[] => {
-    const patterns: string[] = [];
+  // const generateAlternatingPatterns = (query: string): string[] => {
+  //   const patterns: string[] = [];
 
-    for (let i = 0; i < query.length; i++) {
-      const pattern = query.substring(0, i) + "*" + query.substring(i + 1);
-      patterns.push(pattern);
-    }
+  //   for (let i = 0; i < query.length; i++) {
+  //     const pattern = query.substring(0, i) + "*" + query.substring(i + 1);
+  //     patterns.push(pattern);
+  //   }
 
-    return patterns;
-  };
+  //   return patterns;
+  // };
 
   const formatDate = (timestamp: number) => {
     const date = new Date(timestamp * 1000);
@@ -146,11 +142,7 @@ const Page = ({
   return (
     <div className="bg-zinc-50 h-screen">
       <div className="flex flex-row-reverse w-full h-0 ">
-        <SideFilters
-          urlParams={searchParams}
-          data={data}
-          initialOwner={initialOwner}
-        />
+        <SideFilters urlParams={searchParams} data={data} />
         <table className="m-10 w-3/4">
           <thead>
             <tr>

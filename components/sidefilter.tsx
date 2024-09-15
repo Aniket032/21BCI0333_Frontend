@@ -1,5 +1,4 @@
-import { CurrentOwnerBucket, RootResponse } from "@/lib/types";
-import { url } from "inspector";
+import { RootResponse } from "@/lib/types";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -14,7 +13,6 @@ const SideFilters = ({
     attorneys: string[];
   };
   data: RootResponse | null;
-  initialOwner: CurrentOwnerBucket[] | undefined;
 }) => {
   const queryData = {
     input_query: urlParams.q || "", // Use searchParams.q if available
