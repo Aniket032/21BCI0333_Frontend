@@ -1,17 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchIcon from "@/public/SeachIcon.svg";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const SearchBar = () => {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState("");
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  const [searchQuery, setSearchQuery] = useState(params.get("q") || "");
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const encodedQuery = encodeURIComponent(searchQuery).replace("%20", "+");
     router.push(`/search/trademarks?q=${encodedQuery}`);
   };
+
+  useEffect(() => {
+    setSearchQuery(params.get("q") || "");
+  }, [searchParams]);
   return (
     <div className="w-full">
       <form

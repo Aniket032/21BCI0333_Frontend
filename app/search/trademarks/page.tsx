@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import ClassImg from "@/public/CodeImg.svg";
 import Shimmer from "@/components/shimmer";
 import SideFilters from "@/components/sidefilter";
+import AboutQuery from "@/components/aboutquery";
 
 const Page = ({
   searchParams,
@@ -92,17 +93,6 @@ const Page = ({
     fetchData();
   }, [searchParams]);
 
-  // const generateAlternatingPatterns = (query: string): string[] => {
-  //   const patterns: string[] = [];
-
-  //   for (let i = 0; i < query.length; i++) {
-  //     const pattern = query.substring(0, i) + "*" + query.substring(i + 1);
-  //     patterns.push(pattern);
-  //   }
-
-  //   return patterns;
-  // };
-
   const formatDate = (timestamp: number) => {
     const date = new Date(timestamp * 1000);
     const options: Intl.DateTimeFormatOptions = {
@@ -141,6 +131,10 @@ const Page = ({
 
   return (
     <div className="bg-zinc-50 h-screen">
+      <AboutQuery
+        count={data?.body.hits.total.value}
+        urlParams={searchParams}
+      />
       <div className="flex flex-row-reverse w-full h-0 ">
         <SideFilters urlParams={searchParams} data={data} />
         <table className="m-10 w-3/4">
@@ -158,10 +152,12 @@ const Page = ({
                 return (
                   <tr key={item._index} className="border-b">
                     <td className="py-4 ml-6 pr-12 max-w h-24">
-                      <img
+                      <Image
+                        height={250}
+                        width={250}
                         src={getMarkImageUrl(item._id)}
-                        alt="Meta Logo"
-                        className="flex justify-center min-w-fit h-16 rounded-md bg-center"
+                        alt="Logo"
+                        className="flex justify-center  rounded-md bg-center"
                       />
                     </td>
                     <td className="py-4 pl-6 pr-12 h-24">
